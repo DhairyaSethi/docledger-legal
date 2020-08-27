@@ -12,9 +12,24 @@
  * limitations under the License.
  */
 
-namespace org.example.mytemplate
+namespace org.example.fulluponsign
 
-contract MyLogic over MyContract {
+import org.accordproject.cicero.runtime.*
+import org.accordproject.signature.ContractSigned
+import org.accordproject.payment.PaymentReceieved
+
+contract PaymentOnSignature over PaymentOnSignatureContract state PaymentOnSignatureSTate {
+
+  clause init(request: Request) : Response {
+    set state PaymentOnSignatureState {
+      stateId: '1',
+      status: INITIALIZED
+    };
+
+    return Response{}
+
+  }
+
   // Simple Clause
   clause helloworld(request : MyRequest) : MyResponse {
     return MyResponse{ output: "Hello " ++ contract.name ++ " " ++ request.input }

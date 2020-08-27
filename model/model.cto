@@ -3,20 +3,27 @@ namespace org.example.mytemplate
 import org.accordproject.cicero.contract.* from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.cicero.runtime.* from https://models.accordproject.org/cicero/runtime.cto
 
-transaction MyRequest extends Request {
-  o String input
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money.cto
+// TODO: Make payment in DAI/ETH
+
+import org.accordproject.signature.ContractSigned from https://models.accordproject.org/signature/signature.cto
+import org.accordproject.payment.PaymentReceived from https://models.accordproject.org/payment/payment.cto
+// TODO: smart contract call API
+
+asset PaymentOnSignatureState extends AccordContractState {
+  o statusMethods status
 }
 
-transaction MyResponse extends Response {
-  o String output
+enus statusMethods {
+  o INITIALIZED
+  o EMITTED
+  o COMPLETED
 }
 
-/**
- * The model for the contract
- */
-asset MyContract extends AccordContract {
-  /**
-   * The name for the contract
-   */
-  o String name
+asset PaymentOnSignature extends AccordContract {
+  o AccordParty docLedger
+  o AccordParty NGO_1
+  o AccordParty NGO_2
+  o AccordParty Donor_current
+  o MonetaryAmount amount
 }
