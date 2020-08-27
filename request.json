@@ -1,0 +1,4 @@
+{
+    "$class": "org.example.mytemplate.MyRequest",
+    "input": "World"
+}
