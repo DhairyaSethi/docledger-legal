@@ -30,6 +30,38 @@ contract PaymentOnSignature over PaymentOnSignatureContract state PaymentOnSigna
 
   }
 
+  clause contractSigned (request: ContractSigned) : Response emits DonationObligation {
+    
+    enforce (state.status = INITIALIZED)
+    else throw ErgoErroResponse{ message:  `Contract state is currently invalid. Status --> {{% state.status %}}`};
+
+    emit DonationObligation{
+      contract: contract,
+      promisor: some(contract.Donor_current),
+      promisee: some(contract.docLedger),
+      deadline: none,
+      amount: contract.amount,
+      description: contract.Donor_current.partyId ++ 'is paying contract amount ' ++ contract.amount ++ ' to docLedger.'
+    };
+    
+    set state PaymentOnSignatureSTate{
+      stateId: '1',
+      status: EMITTED
+    }
+
+  }
+
+  clause donationReceived(request : PaymentReceieved): Response {
+    enfore (state.status = EMITTED)
+    else throw ErgoErroResponse{ message: `Contract not Initialized by donor OR payment already recieved.` };
+    
+    set state PaymentOnSignatureSTate {
+      stateId: state.stateId,
+      status: COMPLETED
+    };
+
+    return Response{}
+  }
   // Simple Clause
   clause helloworld(request : MyRequest) : MyResponse {
     return MyResponse{ output: "Hello " ++ contract.name ++ " " ++ request.input }

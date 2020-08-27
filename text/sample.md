@@ -1,2 +1,2 @@
-Name of the person to greet: "Dan".
-_Thank you!_
+Upon signing this Agreement, Bill and Melinda Gates Foundation agrees to temporarily secure their donation at docLedger. Their preferred choice of mental health NGO's are noted as Your Health Delhi and Your Health Foundation. 
+This payment is to be collected in a pool and staked. It is to be further distributed by this contract on docLedger users reaching selected goals.
